@@ -32,3 +32,12 @@ const MELODY_ITEM_TYPE = {
   TAKTSTRICH: 2,
   PAUSE: 3,
 };
+
+// Pausen:
+const PAUSE = {
+  SECHZENTEL: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_SECHZENTEL, },
+  ACHTEL: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_ACHTEL, },
+  VIERTEL: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_VIERTEL, },
+  HALB: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_HALB },
+  GANZ: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_GANZ },
+}
