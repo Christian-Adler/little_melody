@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="./favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>&sung; Sound &sung;</title>
+    <style>
+        html {
+            font-size: 100%;
+            font-family: Tahoma, sans-serif;
+            background-color: #090909;
+            color: white;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #play {
+            background-color: cyan;
+            color: #5a0080;
+            border: 2px solid white;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 2.5rem;
+            display: inline-block;
+            width: 7rem;
+            height: 5rem;
+            line-height: 4.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 100ms;
+            user-select: none;
+            margin: 10px;
+        }
+
+        #play:hover {
+            background-color: white;
+        }
+
+        /*https://www.w3schools.com/howto/howto_js_rangeslider.asp*/
+
+        input[type='range'] {
+            -webkit-appearance: none;
+            background-color: gray;
+            height: 16px;
+            border-radius: 15px;
+            padding: 0 3px;
+            border: 1px solid white;
+        }
+
+        input[type='range']::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            vertical-align: middle;
+            background-color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 16px;
+        }
+
+        input[type='range']:hover {
+            box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            margin: 5px;
+            user-select: none;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <canvas id="drawArea" height="256" width="1024" style="height:256px; width: 100vw;display: block; border-bottom:1px solid #4f4f4f;"></canvas>
+</div>
+<div style="background-color: white;">
+    <canvas id="drawNotes" height="120" width="1024" style="height:120px; width: 100%; display: block;"></canvas>
+</div>
+
+<div id="play">
+    &#9654;
+    <!--&frac14;&frac12;&frac34;-->
+</div>
+
+<label for="volume">Volume</label><input id="volume" type="range" min="0" max="100" value="20" step="1"/>
+<label for="tempo">Speed</label><input id="tempo" type="range" min="0.05" max="6.0" value="4.0" step="0.05"/>
+</body>
+
+<script src="state.js"></script>
+<script src="constants.js"></script>
+<script src="drawNotes.js"></script>
+<script src="music.js"></script>
+<script src="analyser.js"></script>
+<script src="volume.js"></script>
+<script src="tempo.js"></script>
+
+</html>

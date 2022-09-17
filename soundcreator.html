@@ -1,0 +1,70 @@
+<html>
+<head>
+
+<script>
+let notes = [
+	[659, 1],
+	[659, 1],
+	[659, 1],
+	[523, 2],
+	[0, 4],
+	[783, 4],
+	[659, 1],
+	[523, 2],
+	[0, 4],
+	[783, 4],
+	[659, 1],
+	[0, 1],
+	[987, 1],
+	[987, 1],
+	[987, 1],
+	[1046, 2],
+	[0, 4],
+	[783, 4],
+	[622, 1],
+	[523, 2],
+	[0, 4],
+	[783, 4],
+	[659, 1]
+];
+
+notes.reverse(); 
+tempo = 0.5;
+
+// create web audio api context
+var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+const gainNode = audioCtx.createGain();
+gainNode.gain.value = 0.1; // setting it to 10%
+gainNode.connect(audioCtx.destination);
+
+function playMelody(){
+console.log('palyMeldody ', new Date())
+	if (notes.length > 0){
+		note = notes.pop();
+		playNote(note[0], 1/note[1]*tempo, playMelody);
+	}
+}
+
+function playNote(frequency, duration, callback) {
+console.log('play note ', new Date());
+	// create Oscillator node
+	var oscillator = audioCtx.createOscillator();
+	
+	oscillator.type = 'square';
+	oscillator.frequency.value = frequency; // value in hertz
+	// oscillator.connect(audioCtx.destination); //original
+  oscillator.connect(gainNode); // mit lautstaerke
+  oscillator.onended = callback;
+	oscillator.start(0);
+	oscillator.stop(audioCtx.currentTime + duration);
+}
+
+//playMelody();
+
+</script>
+</head>
+<body>
+<div onclick="playMelody()">PLAY</div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<html lang="en">
+<head>
+    <title>SoundCreator</title>
+    <style>
+
+        input[type='range'] {
+            -webkit-appearance: none;
+            background-color: gray;
+            height: 20px;
+            border-radius: 15px;
+            padding: 0 3px;
+        }
+
+        input[type='range']::-webkit-slider-thumb {
+            vertical-align: middle;
+            -webkit-appearance: none;
+            background-color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 16px;
+        }
+
+
+    </style>
+
+    <script>
+      let notes = [
+        // [400, 0.01],
+        [659, 1],
+        [659, 1],
+        [659, 1],
+        [523, 2],
+        [0, 4],
+        [783, 4],
+        [659, 1],
+        [523, 2],
+        [0, 4],
+        [783, 4],
+        [659, 1],
+        [0, 1],
+        [987, 1],
+        [987, 1],
+        [987, 1],
+        [1046, 2],
+        [0, 4],
+        [783, 4],
+        [622, 1],
+        [523, 2],
+        [0, 4],
+        [783, 4],
+        [659, 1]
+      ];
+
+      tempo = 0.5;
+
+      // create web audio api context
+      let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      let gainNode = audioCtx.createGain();
+      gainNode.gain.value = 0.2; // setting it to 10%
+      gainNode.connect(audioCtx.destination);
+
+
+      function playMelody(melody) {
+        console.log('playMelody ', new Date());
+        const melod = [...melody];
+        melod.reverse();
+
+        const play = () => {
+          if (melod.length > 0) {
+            let note = melod.pop();
+            playNote(note[0], 1 / note[1] * tempo, play);
+          }
+        };
+
+        play();
+      }
+
+      function playNote(frequency, duration, callback) {
+        // console.log('play note ', new Date());
+
+        // create Oscillator node
+        const oscillator = audioCtx.createOscillator();
+
+        //oscillator.type = 'triangle'; // "sine", "square", "sawtooth", "triangle"
+        oscillator.frequency.value = frequency; // value in hertz
+        // oscillator.connect(audioCtx.destination); //original
+        oscillator.connect(gainNode); // mit lautstaerke
+        oscillator.onended = callback;
+        oscillator.start(0);
+        oscillator.stop(audioCtx.currentTime + duration);
+      }
+
+      const analyser = audioCtx.createAnalyser();
+      gainNode.connect(analyser);
+      analyser.fftSize = 1024; // 2048 fuer line 256 fuer bar;
+      analyser.minDecibels = -80;
+      analyser.maxDecibels = -10;
+      analyser.smoothingTimeConstant = 0.85;
+
+      const bufferLength = analyser.frequencyBinCount;
+
+      console.log('bufferLength: ', bufferLength);
+
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteTimeDomainData(dataArray);
+
+      function changeVolume(element) {
+        var volume = element.value;
+        var fraction = parseInt(element.value) / parseInt(element.max);
+        // Let's use an x*x curve (x-squared) since simple linear (x) does not
+        // sound as good.
+        gainNode.gain.value = fraction * fraction;
+
+        element.style.backgroundColor = 'rgb(' + (fraction * fraction * 256) + ',0,100)'
+      }
+
+    </script>
+</head>
+<body>
+
+<div onclick="playMelody(notes)">PLAY</div>
+
+<canvas id="drawArea" height="256" width="1024" style="height:256px; border:1px solid blue;"></canvas>
+
+<input type="range" min="0" max="100" value="20" oninput="changeVolume(this);">
+
+<script>
+  const WIDTH = 1024;
+  const HEIGHT = 256;
+
+  // draw an oscilloscope of the current audio source
+  var canvas = document.getElementById('drawArea');
+  canvas.style.width = WIDTH + 'px';
+  var canvasCtx = canvas.getContext('2d');
+  //console.log(ctx); // CanvasRenderingContext2D { /* ... */ }
+  canvasCtx.width = WIDTH;
+  canvasCtx.height = HEIGHT;
+
+
+  //canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+  //canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+
+  function draw() {
+    // console.log('draw');
+    /* drawVisual = */
+    requestAnimationFrame(draw);
+
+    analyser.getByteTimeDomainData(dataArray);
+    //analyser.getByteFrequencyData(dataArray);
+
+    canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+    canvasCtx.lineWidth = 2;
+    canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+    canvasCtx.lineJoin = 'round';
+    canvasCtx.lineCap = 'round';
+
+    canvasCtx.beginPath();
+
+    const sliceWidth = WIDTH / bufferLength;
+    // console.log('sliceWidth',sliceWidth);
+    let x = sliceWidth * 0.5;
+
+    for (let i = 0; i < bufferLength; i++) {
+      const value = dataArray[i];
+
+      const v = value / 256;
+      const y = v * HEIGHT;
+
+      if (i === 0) {
+        canvasCtx.moveTo(x, y);
+      }
+      else {
+        canvasCtx.lineTo(x, y);
+      }
+
+      x += sliceWidth;
+    }
+
+    //canvasCtx.lineTo(WIDTH, HEIGHT / 2);
+    canvasCtx.stroke();
+  }
+
+  // draw();
+
+  function drawBars() {
+    //console.log('draw');
+    /* drawVisual = */
+    requestAnimationFrame(drawBars);
+
+    analyser.getByteFrequencyData(dataArray);
+
+    canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+    const interrestingBufferLength = bufferLength / 10;
+
+    const sliceWidth = WIDTH / interrestingBufferLength; //* 2.5;
+    // console.log('sliceWidth',sliceWidth);
+    let x = 0; // sliceWidth * 0.5;
+    // console.log(JSON.stringify(dataArray));
+    for (let i = 0; i < interrestingBufferLength; i++) {
+      const value = dataArray[i];
+
+      // const v = value / 256;
+      const v = value / 200;
+      const y = v * HEIGHT;
+
+      // canvasCtx.fillStyle = 'rgb(' + (y / HEIGHT * 256) + ',150,50)';
+      canvasCtx.fillStyle = 'rgb(' + (y / HEIGHT * 256) + ',' + x / WIDTH * 256 + ',100)';
+      canvasCtx.fillRect(x, HEIGHT - y, sliceWidth, y);
+
+      x += sliceWidth;
+    }
+  }
+
+  drawBars();
+
+</script>
+
+</body>
+</html>
