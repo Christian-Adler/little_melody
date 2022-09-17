@@ -274,106 +274,13 @@
       ctx.stroke();
     };
     
-    // const melodyDraw = [
-    //   {
-    //     type: MELODY_ITEM_TYPE.TAKTSTRICH,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     frequency: TON_C1,
-    //     duration: DAUER_VIERTEL,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_VIERTEL,
-    //     frequency: TON_D1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_VIERTEL,
-    //     frequency: TON_E1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_VIERTEL,
-    //     frequency: TON_F1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.TAKTSTRICH,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_G1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_A1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_H1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_C2,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_ACHTEL,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.TAKTSTRICH,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_HALB,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_HALB,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.TAKTSTRICH,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.NOTE,
-    //     duration: DAUER_GANZ,
-    //     frequency: TON_C1,
-    //   },
-    //   {
-    //     type: MELODY_ITEM_TYPE.TAKTSTRICH,
-    //   },
-    // ];
-    
     let position = WIDTH / 2;
     const taktWidth = 400; // muss mit Tempo in Relation gesetzt werden... bei tempo 1 ist der Takt in 1s zu bewegen
     let requestAnimationFrameId = null;
     
     const drawMelody = () => {
       clear();
-      
+      const melody = MUSIC.actMelody.melody;
       // console.log(position);
       
       drawLines();
@@ -429,7 +336,8 @@
     MUSIC.start = () => {
       MUSIC.startTime = audioCtx.currentTime;
       MUSIC.isPlaying = true;
-      playMelody(melody);
+      document.getElementById('title').innerText = MUSIC.actMelody.title;
+      playMelody();
       startDrawing();
       updatePlayBtn();
       MUSIC.analyserStartDrawing();
@@ -446,5 +354,4 @@
       else MUSIC.start();
     };
   }
-)
-();
+)();

@@ -1,5 +1,20 @@
 // https://teropa.info/blog/2016/08/10/frequency-and-pitch.html
 
+(() => {
+  MUSIC.actMelody = MUSIC.melodies[0]; // erste Melody setzen
+  
+  const titleEl = document.getElementById('title');
+  titleEl.innerText = MUSIC.actMelody.title;
+
+// EventListener auf Select Change
+  const select = document.getElementById('selectMelody');
+  select.addEventListener('change', () => {
+    // console.log(select.value);
+    MUSIC.actMelody = MUSIC.melodies[select.value];
+    titleEl.innerText = MUSIC.actMelody.title;
+  });
+})();
+
 // Variablen
 // =========
 let tempo = 1.0;
@@ -17,8 +32,8 @@ const gainNode = audioCtx.createGain();
 gainNode.gain.value = 0.2; // setting it to 10%
 gainNode.connect(audioCtx.destination);
 
-function playMelody(melody) {
-  const melod = [...melody];
+function playMelody() {
+  const melod = [...MUSIC.actMelody.melody];
   
   // create Oscillator node
   oscillator = audioCtx.createOscillator();
