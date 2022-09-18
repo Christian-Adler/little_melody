@@ -1,6 +1,5 @@
 (() => {
   const melody = [
-    TAKTSTRICH,
     ton(TON_C1, DAUER_DREI_VIERTEL),
     ton(TON_C1, DAUER_VIERTEL),
     TAKTSTRICH,

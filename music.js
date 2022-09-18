@@ -12,6 +12,7 @@
     // console.log(select.value);
     MUSIC.actMelody = MUSIC.melodies[select.value];
     titleEl.innerText = MUSIC.actMelody.title;
+    window.dispatchEvent(new Event('resize')); // Neu zeichnen veranlassen.
   });
 })();
 

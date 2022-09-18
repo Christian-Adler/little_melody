@@ -56,6 +56,12 @@
       ctx.stroke();
     };
     
+    
+    const drawNotenSchluessel = (position = 0,) => {
+      // ueberhaupt in sichtbarem Bereich?
+      if (position < lineDistance || position > WIDTH + lineDistance) return;
+      ctx.drawImage(IMG_NOTENSCHLUESSEL, 0, 0, 35, 100, position - 8 / 3 * lineDistance, y0 - 4 * lineDistance, 8 / 3 * lineDistance, 8 * lineDistance);
+    };
     const drawNote = ({
                         duration = DAUER_VIERTEL,
                         frequency = TON_A1,
@@ -265,7 +271,7 @@
     const drawTaktstrich = (position) => {
       // ueberhaupt in sichtbarem Bereich?
       if (position < lineDistance || position > WIDTH + lineDistance) return;
-      // Notenkoerper
+      //
       ctx.beginPath();
       ctx.lineWidth = 2;
       ctx.strokeStyle = color;
@@ -285,6 +291,7 @@
       
       drawLines();
       let pos = position;
+      drawNotenSchluessel(pos);
       for (const melodyItem of melody) {
         if (melodyItem.type === MELODY_ITEM_TYPE.NOTE) {
           const drawPos = pos + (melodyItem.duration / 2) * taktWidth;

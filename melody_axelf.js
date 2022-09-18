@@ -1,6 +1,5 @@
 (() => {
   const liedAnfang = [
-    { type: MELODY_ITEM_TYPE.TAKTSTRICH }, // Kommentar Taktstrich 1
     ton(TON_A1, DAUER_VIERTEL),
     ton(TON_C2, DAUER_DREI_SECHZENTEL),
     ton(TON_A1, DAUER_SECHZENTEL),
@@ -9,7 +8,7 @@
     ton(TON_D2, DAUER_ACHTEL),
     ton(TON_A1, DAUER_ACHTEL),
     ton(TON_G1, DAUER_ACHTEL),
-    { type: MELODY_ITEM_TYPE.TAKTSTRICH },
+    TAKTSTRICH,
     ton(TON_A1, DAUER_VIERTEL),
     ton(TON_E2, DAUER_DREI_SECHZENTEL),
     ton(TON_A1, DAUER_SECHZENTEL),
@@ -18,7 +17,7 @@
     ton(TON_F2, DAUER_ACHTEL),
     ton(TON_E2, DAUER_ACHTEL),
     ton(TON_C2, DAUER_ACHTEL),
-    { type: MELODY_ITEM_TYPE.TAKTSTRICH },
+    TAKTSTRICH,
     ton(TON_A1, DAUER_ACHTEL),
     ton(TON_E2, DAUER_ACHTEL),
     ton(TON_A2, DAUER_ACHTEL),
@@ -29,17 +28,17 @@
     ton(TON_E1, DAUER_ACHTEL),
     ton(TON_H1, DAUER_ACHTEL),
     ton(TON_A1, DAUER_ACHTEL),
-    { type: MELODY_ITEM_TYPE.TAKTSTRICH },
+    TAKTSTRICH,
     ton(TON_A1, DAUER_HALB),
     ton(TON_A2, DAUER_VIERTEL),
     ton(TON_A2, DAUER_VIERTEL),
+    TAKTSTRICH,
   ];
   
   const melody = [
     // ...liedAnfang,
     // ...liedAnfang,
     
-    TAKTSTRICH,
     ton(TON_A0, DAUER_VIERTEL),
     ton(TON_A1, DAUER_DREI_SECHZENTEL),
     ton(TON_G1, DAUER_SECHZENTEL),
