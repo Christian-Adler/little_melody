@@ -41,3 +41,16 @@ const PAUSE = {
   HALB: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_HALB },
   GANZ: { type: MELODY_ITEM_TYPE.PAUSE, duration: DAUER_GANZ },
 }
+
+const TAKTSTRICH = { type: MELODY_ITEM_TYPE.TAKTSTRICH };
+
+/**
+ * MelodyItem erzeugen
+ * @param frequency
+ * @param duration
+ * @returns {{duration: number, type: number, frequency: number}}
+ */
+const ton = (frequency = TON_A1, duration = DAUER_VIERTEL) => {
+  return { type: MELODY_ITEM_TYPE.NOTE, frequency, duration };
+};
+
