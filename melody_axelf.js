@@ -43,9 +43,20 @@
     { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_A0, duration: DAUER_VIERTEL, },
     { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_A1, duration: DAUER_DREI_SECHZENTEL, },
     { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_G1, duration: DAUER_SECHZENTEL, },
-    
-    
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_G1, duration: DAUER_SECHZENTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_G1, duration: DAUER_SECHZENTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_E1, duration: DAUER_ACHTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_E1, duration: DAUER_ACHTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_G1, duration: DAUER_ACHTEL, },
+    { type: MELODY_ITEM_TYPE.TAKTSTRICH },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_A0, duration: DAUER_VIERTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_A1, duration: DAUER_VIERTEL, },
     PAUSE.SECHZENTEL,
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_E1, duration: DAUER_SECHZENTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_E1, duration: DAUER_ACHTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_G1, duration: DAUER_ACHTEL, },
+    { type: MELODY_ITEM_TYPE.NOTE, frequency: TON_A1, duration: DAUER_ACHTEL, },
+    
     { type: MELODY_ITEM_TYPE.TAKTSTRICH },
   ];
   
