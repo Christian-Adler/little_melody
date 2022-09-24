@@ -2,7 +2,7 @@
   const rangeTempo = document.getElementById("tempo");
   
   const setTempo = (value = 1, max = 2) => {
-    console.log(value);
+    // console.log(value);
     stopPlaying();
     const fraction = value / max;
     // Let's use an x*x curve (x-squared) since simple linear (x) does not sound as good.
